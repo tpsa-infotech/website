@@ -9,12 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/pro-theme": "^0.0.43",
+    "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@fontsource/inter": "^4.5.7",
+    "@fontsource/lato": "^4.5.5",
+    "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
     "next": "12.1.5",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-icons": "^4.3.1",
+    "react-table": "^7.7.0"
   },
   "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.44",
     "eslint": "8.13.0",
-    "eslint-config-next": "12.1.5"
+    "eslint-config-next": "12.1.5",
+    "typescript": "^4.6.3"
   }
 }
