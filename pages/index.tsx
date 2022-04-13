@@ -24,7 +24,7 @@ export default function CallToActionWithAnnotation() {
             fontWeight={900}
             fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
             lineHeight={'110%'}>
-            Header <br />
+            Beta Header <br />
             <Text as={'span'} color={'green.400'}>
               One
             </Text>
