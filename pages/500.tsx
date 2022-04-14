@@ -24,18 +24,11 @@ function Error({ statusCode }) {
                     Error
                 </Heading>
                 <Text color={'gray.500'}>
-                    {statusCode
-                        ? `An error ${statusCode} occurred on server`
-                        : 'An error occurred on client'}
+                    An error occurred.
                 </Text>
             </Box>
         </Center>
     )
-}
-  
-Error.getInitialProps = ({ res, err }) => {
-    const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-    return { statusCode }
 }
 
 export default Error
