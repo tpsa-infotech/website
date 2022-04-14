@@ -9,50 +9,83 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  Flex,
+  HStack,
+  Wrap,
+  WrapItem
 } from '@chakra-ui/react';
 
+import { ArrowForwardIcon } from '@chakra-ui/icons';
+
+import General from '../components/cards/general';
+
+function Conference({ id, title, date, desc, ...rest }) {
+  return (
+    <WrapItem>
+      <General 
+        title={title}
+        subTitle={date}
+        desc={desc}
+        buttonLink={`/conferences/${id}`}
+      />
+    </WrapItem>
+  )
+}
+
 export default function CallToActionWithAnnotation() {
+
+  const updates = [{title: "New Update Title", date: "3 minutes ago", desc: "This is a description of the update."}, {title: "New Update Title", date: "3 minutes ago", desc: "This is a description of the update."}]
+
   return (
     <>
-      <Container maxW={'3xl'}>
+      <Container maxW={'6xl'}>
         <Stack
           as={Box}
-          textAlign={'center'}
-          spacing={{ base: 8, md: 14 }}
-          py={{ base: 20, md: 36 }}>
+          spacing={{ base: 8, md: 4 }}
+          align={'left'}
+          py={{ base: 20}}>
+
           <Heading
             fontWeight={900}
-            fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
+            fontSize={{ base: '4xl', sm: '5xl', md: '6xl' }}
             lineHeight={'110%'}>
-            Header <br />
-            <Text as={'span'} color={'green.400'}>
-              One
-            </Text>
+            Texas Public Safety Association
           </Heading>
-          <Text color={'gray.500'}>
-            This is some text.
+          
+          <Text maxW={'3xl'} color={'gray.500'}>
+            The mission of the Texas Public Safety Association is to promote Law, Public Safety, Corrections, and Security students with knowledge, skills, leadership, and student growth through real world career preparation, experience, training and competitive opportunities.
           </Text>
-          <Stack
-            direction={'column'}
-            spacing={3}
-            align={'center'}
-            alignSelf={'center'}
-            position={'relative'}>
-            <Button
-              colorScheme={'green'}
-              bg={'green.400'}
-              rounded={'full'}
-              px={6}
-              _hover={{
-                bg: 'green.500',
-              }}>
-              Get Started
+
+          <Heading
+            fontWeight={900}
+            fontSize={'2xl'}
+            mt={8}
+            lineHeight={'100%'}>
+            Latest Updates
+          </Heading>
+
+          <Wrap>
+
+            { updates.map((update, index) => (
+              <Conference
+                id={update.index}
+                title={update.title}
+                date={update.date}
+                desc={update.desc}
+              />
+            ))
+
+            }
+  
+          </Wrap>
+
+          
+          <Box>
+            <Button size={'lg'} variant={'link'}  colorScheme={'blue'}>
+              See All Updates
             </Button>
-            <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-              Learn more
-            </Button>
-            
-          </Stack>
+          </Box>
+
         </Stack>
       </Container>
     </>
