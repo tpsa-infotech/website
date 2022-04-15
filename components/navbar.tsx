@@ -256,13 +256,13 @@ import {
         {
           label: '2022 State Conference',
           subLabel: 'April 25th - 27th',
-          href: '#',
+          href: '/conferences/e2eae8f5-34e1-4249-9fcf-d010906c6cfa',
         },
       ],
     },
     {
       label: 'Rubrics',
-      href: '#',
+      href: '/rubrics',
     },
     {
       label: 'Policies',
@@ -270,7 +270,7 @@ import {
     },
     {
       label: 'Notifications',
-      href: '#',
+      href: '/notifications',
     },
     {
       label: 'myTPSA',
