@@ -8,13 +8,5 @@ const { email, password, token } = serverRuntimeConfig;
 const directus = new Directus(url);
 
 export async function getDirectusClient() {
-//   if (directus.auth.token) return directus;
-
-//   if (email && password) {
-//     await directus.auth.login({ email, password });
-//   } else if (token) {
-//     await directus.auth.static(token);
-//   }
-
   return directus;
 }

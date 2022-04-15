@@ -15,6 +15,8 @@ export default async () => {
         "limit": 3,
     })
 
+    
+
     const conferences = response.data.map((conference) => {
         conference.start_date = formatDate(conference.start_date, data_format)
         conference.end_date = format(parseISO(conference.end_date), data_format)
