@@ -1,8 +1,9 @@
 import { ChakraProvider, extendTheme  } from '@chakra-ui/react'
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
 import { theme } from '@chakra-ui/pro-theme'
 import '@fontsource/inter/variable.css'
 import Layout from '../components/layout'
+import React from 'react'
 
 const myTheme = extendTheme(
   {
@@ -11,16 +12,17 @@ const myTheme = extendTheme(
   theme,
 )
 
-const queryClient = new QueryClient();
-
 function MyApp({ Component, pageProps }) {
+  const [queryClient] = React.useState(() => new QueryClient())
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider theme={myTheme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
+      <Hydrate state={pageProps.dehydratedState}>
+        <ChakraProvider theme={myTheme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ChakraProvider>
+      </Hydrate>
     </QueryClientProvider>
   )
 }

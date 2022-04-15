@@ -1,11 +1,17 @@
 import ConferencesData from "../models/conferences/basic_list";
+import FeedData from "@/models/feed/home_page"
+
 import { useQuery } from 'react-query'
 import { Section, Card } from '../components/library';
 import Logo from '../components/Logo';
-import {Wrap, WrapItem, Heading, Text} from '@chakra-ui/react';
+import {Wrap, WrapItem, Heading, Text, Button} from '@chakra-ui/react';
 
-export default function Home() {
-  const {isSuccess, isError, isLoading, data} = useQuery('homeConferences', ConferencesData)
+import { ArrowForwardIcon } from '@chakra-ui/icons';
+import NextLink from "next/link"
+
+export default function Home(props) {
+  const conferenceQuery = useQuery('homeConferences', ()=>ConferencesData(3), { initialData: props.conferences })
+  const feedQuery = useQuery('homeFeed', FeedData, { initialData: props.feed })
 
   return (
     <Section>
@@ -30,8 +36,8 @@ export default function Home() {
       </Heading>
 
 
-      <Wrap py={4}>
-      {!isLoading && data.map((conference) => (
+      <Wrap py={4} opacity={conferenceQuery.isLoading ? 0.5 : 1}>
+      {conferenceQuery.data.map((conference) => (
         <WrapItem key={conference.id}>
           <Card 
             title={conference.name}
@@ -42,16 +48,55 @@ export default function Home() {
         </WrapItem>
       ))}
       </Wrap>
+
+      <NextLink href={"/feed"} passHref>
+        <Button mt={2} rightIcon={<ArrowForwardIcon />} variant={'link'} colorScheme={'blue'}>
+          All Conferences
+        </Button>
+      </NextLink>
+
+
+      <Heading
+        fontWeight={900}
+        fontSize={'2xl'}
+        mt={8}
+        lineHeight={'100%'}>
+        Feed
+      </Heading>
+
+
+      <Wrap py={4} opacity={feedQuery.isLoading ? 0.5 : 1}>
+      {feedQuery.data.map((post) => (
+        <WrapItem key={post.id}>
+          <Card 
+            title={post.title}
+            subTitle={post.date_updated}
+            desc={post.description}
+            buttonLink={`/feed/${post.id}`}
+            buttonText="Read More"
+            tags={[post.conference.name]}
+          />
+        </WrapItem>
+      ))}
+      </Wrap>
+
+      <NextLink href={"/feed"} passHref>
+        <Button mt={2} rightIcon={<ArrowForwardIcon />} variant={'link'} colorScheme={'blue'}>
+          All Posts
+        </Button>
+      </NextLink>
     </Section>
   );
 }
 
-// export async function getStaticProps() {
-//   const conferences = await ConferencesData()
+export async function getStaticProps() {
+  const conferences = await ConferencesData(3)
+  const feed = await FeedData()
 
-//   return {
-//     props: {
-//       conferences,
-//     },
-//   };
-// }
+  return {
+    props: {
+      conferences,
+      feed
+    },
+  };
+}

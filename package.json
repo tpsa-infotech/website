@@ -12,6 +12,7 @@
     "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/pro-theme": "^0.0.43",
     "@chakra-ui/react": "^1.8.8",
+    "@directus/format-title": "^9.8.0",
     "@directus/sdk": "^9.8.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
