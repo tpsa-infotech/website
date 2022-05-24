@@ -12,7 +12,8 @@ import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 // Page Function
 const template = (props) => {
-  // Set up the query to use the static generated data and then hydrate it with new data
+
+  // Set up the query to use the static generated data passed in via props and then hydrate it with new data (FeedData), this acts as a state manager and refreshes the data automatically
   const feedQuery = useQuery('feed-index', FeedData, { initialData: props.feed })
 
   return (
