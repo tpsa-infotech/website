@@ -1,3 +1,4 @@
+
 import {Box, Text, Button, Center, useColorModeValue, Badge, Stack} from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import NextLink from "next/link"
@@ -22,6 +23,7 @@ export function Card({title, subTitle, desc, buttonLink, buttonText = "Details",
           <Text fontSize='lg' fontWeight={700}>{title}</Text>
 
           {subTitle && <Text mt={1}>{subTitle}</Text>}
+
 
           {desc && <Text fontSize='sm' color={'gray.500'} mt={1} noOfLines={3}>
             {desc}

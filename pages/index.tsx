@@ -13,6 +13,7 @@ export default function Home(props) {
   const conferenceQuery = useQuery('homeConferences', ()=>ConferencesData(3), { initialData: props.conferences })
   const feedQuery = useQuery('homeFeed', FeedData, { initialData: props.feed })
 
+
   return (
     <Section>
 
@@ -36,8 +37,10 @@ export default function Home(props) {
       </Heading>
 
 
+
       <Wrap py={4} opacity={conferenceQuery.isLoading ? 0.5 : 1}>
       {conferenceQuery.data.map((conference) => (
+
         <WrapItem key={conference.id}>
           <Card 
             title={conference.name}
@@ -48,6 +51,7 @@ export default function Home(props) {
         </WrapItem>
       ))}
       </Wrap>
+
 
       <NextLink href={"/feed"} passHref>
         <Button mt={2} rightIcon={<ArrowForwardIcon />} variant={'link'} colorScheme={'blue'}>
@@ -85,6 +89,7 @@ export default function Home(props) {
           All Posts
         </Button>
       </NextLink>
+
     </Section>
   );
 }
@@ -100,3 +105,4 @@ export async function getStaticProps() {
     },
   };
 }
+

@@ -5,7 +5,9 @@ import formatDate from "@/utils/date-format"
 
 const data_format = 'MMM do, yyyy'
 
+
 export default async (limit) => {
+
 
     const directus = await getDirectusClient()
 
@@ -13,6 +15,7 @@ export default async (limit) => {
         "fields": ["id","name","start_date","end_date"],
         "sort": "-start_date",
         "limit": limit,
+
     })
 
     
