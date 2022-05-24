@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import {
     Box,
     Flex,
@@ -15,7 +16,8 @@ import {
     useBreakpointValue,
     useDisclosure,
     Image,
-    useColorMode
+    useColorMode,
+
   } from '@chakra-ui/react';
   import {
     HamburgerIcon,
@@ -23,13 +25,23 @@ import {
     ChevronDownIcon,
     ChevronRightIcon,
     ExternalLinkIcon,
+    ArrowForwardIcon
   } from '@chakra-ui/icons';
 
+  import NextLink from "next/link"
+
   import ThemeSwitcher from "./themeSwitcher";
+
+  import Logo from '@/components/Logo'
+
+  import ConferencesData from "../models/conferences/nav_bar";
+  import { useQuery } from 'react-query'
   
-  export default function WithSubnavigation() {
+  export default function WithSubnavigation(props) {
     const { isOpen, onToggle } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
+    const conferenceQuery = useQuery('navbarConferences', ConferencesData, { initialData: props.conferences })
+
     return (
       <Box>
         <Flex
@@ -56,17 +68,12 @@ import {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Text
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-              fontFamily={'heading'}
-              color={useColorModeValue('gray.800', 'white')}>
-              {colorMode === 'light' ? <Image src='/logo.png' alt='TPSA' height={'32px'}/> : <Image src='/logo_light.png' alt='TPSA' height={'32px'}/>}
-              
-            </Text>
+            <Logo />
   
             <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-              <DesktopNav />
+              <DesktopNav conferences={conferenceQuery.data}/>
             </Flex>
+
           </Flex>
   
           <Stack
@@ -92,24 +99,78 @@ import {
         </Flex>
   
         <Collapse in={isOpen} animateOpacity>
-          <MobileNav />
+          <MobileNav conferences={conferenceQuery.data}/>
         </Collapse>
       </Box>
     );
   }
+
+  interface Navigation {
+    conferences: NavItem[]
+  }
   
-  const DesktopNav = () => {
+  const DesktopNav = ({conferences}: Navigation) => {
     const linkColor = useColorModeValue('gray.600', 'gray.200');
     const linkHoverColor = useColorModeValue('gray.800', 'white');
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
   
     return (
       <Stack direction={'row'} spacing={4}>
+        <Box key={"Conferences"}>
+            <Popover trigger={'hover'} placement={'bottom-start'}>
+              <PopoverTrigger>
+                <Link
+                  p={2}
+                  fontSize={'sm'}
+                  fontWeight={500}
+                  color={linkColor}
+                  _hover={{
+                    textDecoration: 'none',
+                    color: linkHoverColor,
+                  }}>
+                  Conferences
+                </Link>
+              </PopoverTrigger>
+  
+              {conferences && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={'xl'}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={'xl'}
+                  minW={'sm'}>
+                  <Stack>
+                    {conferences.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+
+            
+        
+
+            </Popover>
+          </Box>
         {NAV_ITEMS.map((navItem) => (
           <Box key={navItem.label}>
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
-                <Link
+                <>
+                {navItem.href && <NextLink href={navItem.href} passHref><Link
+                    p={2}
+                    fontSize={'sm'}
+                    fontWeight={500}
+                    color={linkColor}
+                    _hover={{
+                      textDecoration: 'none',
+                      color: linkHoverColor,
+                    }}>
+                    {navItem.label}
+                  </Link></NextLink>}
+
+                {!navItem.href && <Link
                   p={2}
                   href={navItem.href ?? '#'}
                   fontSize={'sm'}
@@ -120,7 +181,9 @@ import {
                     color: linkHoverColor,
                   }}>
                   {navItem.label}
-                </Link>
+                </Link>}
+                </>
+                
               </PopoverTrigger>
   
               {navItem.children && (
@@ -147,44 +210,48 @@ import {
   
   const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
     return (
-      <Link
-        href={href}
-        role={'group'}
-        display={'block'}
-        p={2}
-        rounded={'md'}
-        _hover={{ bg: useColorModeValue('blue.50', 'gray.900') }}>
-        <Stack direction={'row'} align={'center'}>
-          <Box>
-            <Text
+      <NextLink key={label} href={href} passHref><Link
+          href={href}
+          role={'group'}
+          display={'block'}
+          p={2}
+          rounded={'md'}
+          _hover={{ bg: useColorModeValue('blue.50', 'gray.900') }}>
+          <Stack direction={'row'} align={'center'}>
+            <Box>
+              <Text
+                transition={'all .3s ease'}
+                _groupHover={{ color: 'blue.400' }}
+                fontWeight={500}>
+                {label}
+              </Text>
+              <Text fontSize={'sm'}>{subLabel}</Text>
+            </Box>
+            <Flex
               transition={'all .3s ease'}
-              _groupHover={{ color: 'blue.400' }}
-              fontWeight={500}>
-              {label}
-            </Text>
-            <Text fontSize={'sm'}>{subLabel}</Text>
-          </Box>
-          <Flex
-            transition={'all .3s ease'}
-            transform={'translateX(-10px)'}
-            opacity={0}
-            _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-            justify={'flex-end'}
-            align={'center'}
-            flex={1}>
-            <Icon color={'blue.400'} w={5} h={5} as={ChevronRightIcon} />
-          </Flex>
-        </Stack>
-      </Link>
+              transform={'translateX(-10px)'}
+              opacity={0}
+              _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+              justify={'flex-end'}
+              align={'center'}
+              flex={1}>
+              <Icon color={'blue.400'} w={5} h={5} as={ChevronRightIcon} />
+            </Flex>
+          </Stack>
+        </Link></NextLink>
+      
     );
   };
   
-  const MobileNav = () => {
+  const MobileNav = ({conferences}: Navigation) => {
     return (
+      
       <Stack
         bg={useColorModeValue('white', 'gray.800')}
         p={4}
         display={{ md: 'none' }}>
+
+        <MobileNavItem  label={"Conferences"} children={conferences}/>
         {NAV_ITEMS.map((navItem) => (
           <MobileNavItem key={navItem.label} {...navItem} />
         ))}
@@ -224,6 +291,7 @@ import {
   
         <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
           <Stack
+
             mt={2}
             pl={4}
             borderLeft={1}
@@ -232,9 +300,10 @@ import {
             align={'start'}>
             {children &&
               children.map((child) => (
-                <Link key={child.label} py={2} href={child.href}>
-                  {child.label}
-                </Link>
+                <NextLink key={child.label} href={child.href} passHref><Link  py={2} >
+                    {child.label}
+                  </Link></NextLink>
+                
               ))}
           </Stack>
         </Collapse>
@@ -250,16 +319,6 @@ import {
   }
   
   const NAV_ITEMS: Array<NavItem> = [
-    {
-      label: 'Conferences',
-      children: [
-        {
-          label: '2022 State Conference',
-          subLabel: 'April 25th - 27th',
-          href: '/conferences/e2eae8f5-34e1-4249-9fcf-d010906c6cfa',
-        },
-      ],
-    },
     {
       label: 'Rubrics',
       href: '/rubrics',
@@ -277,3 +336,13 @@ import {
       href: 'https://my.tpsa.info',
     },
   ];
+
+  export async function getStaticProps() {
+    const conferences = await ConferencesData()
+  
+    return {
+      props: {
+        conferences
+      },
+    };
+  }
