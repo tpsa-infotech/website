@@ -61,7 +61,7 @@ export default function Home(props) {
         fontSize={'2xl'}
         mt={8}
         lineHeight={'100%'}>
-        Feed
+        Updates
       </Heading>
 
 
