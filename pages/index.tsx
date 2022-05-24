@@ -78,7 +78,7 @@ export default function Home(props) {
             desc={post.description}
             buttonLink={`/feed/${post.id}`}
             buttonText="Read More"
-            tags={[post.conference.name]}
+            tags={post.conference ? [post.conference.name] : []}
           />
         </WrapItem>
       ))}

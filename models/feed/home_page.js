@@ -14,15 +14,18 @@ export default async () => {
     const directus = await getDirectusClient()
 
     const response = await directus.items('feed').readByQuery({
-        "fields": ["id","title","description","status", "user_updated", "date_updated", "conference.name"],
+        "fields": ["id","title","description","status", "user_updated", "date_updated", "date_created", "conference.name"],
         "filter": {"status": {"_eq": "published"}},
-        "sort": "-date_updated",
+        "sort": "-date_updated,-date_created",
         "limit": 3,
     })
 
     
 
     const feed_posts = response.data.map((post) => {
+        if(!post.date_updated){
+            post.date_updated = post.date_created
+        }
         return {
             ...post,
             date_updated: formatTitle(formatRelative(parseISO(post.date_updated), new Date())),
