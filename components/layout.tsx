@@ -3,6 +3,7 @@
 import Navbar from './navbar'
 import Footer from './footer'
 import Banner from './banner'
+import { Section } from '@/components/library';
 
 export default function Layout({ children }) {
   return (
@@ -10,7 +11,11 @@ export default function Layout({ children }) {
         
         <Navbar />
         <Banner />
-        <main>{children}</main>
+        <main>
+          <Section>
+            {children}
+          </Section>
+          </main>
         <Footer />
     </>
   )
