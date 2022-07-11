@@ -4,10 +4,38 @@ import FeedData from "@/models/feed/home_page"
 import { useQuery } from 'react-query'
 import { Section, Card } from '../components/library';
 import Logo from '../components/Logo';
-import {Wrap, WrapItem, Heading, Text, Button} from '@chakra-ui/react';
+import {Stack, Badge, useColorModeValue, Wrap, WrapItem, Heading, Text, Button, Box, HStack, Alert, AlertIcon, AlertTitle, AlertDescription, SimpleGrid } from '@chakra-ui/react';
 
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import NextLink from "next/link"
+
+function ConferenceCard({title, subTitle, desc, buttonLink, buttonText = "Details", tags}) {
+  return (
+      <Box p={5} shadow='md' borderWidth='1px' borderRadius='lg' overflow='hidden' w={'100%'} bg={useColorModeValue('white', 'gray.800')}>
+
+        {tags && <Stack direction='row' mb={1}>
+          {tags.map(text => <Badge key={text} variant="subtle" size="sm">{text}</Badge>)}
+        </Stack>}
+
+        <Text fontSize='lg' fontWeight={700}>{title}</Text>
+
+        {subTitle && <Text mt={1}>{subTitle}</Text>}
+
+
+        {desc && <Text fontSize='sm' color={'gray.500'} mt={1} noOfLines={3}>
+          {desc}
+        </Text>}
+        
+        {buttonLink &&
+          <NextLink href={buttonLink} passHref>
+            <Button mt={2} rightIcon={<ArrowForwardIcon />} variant={'link'} colorScheme={'blue'}>
+              {buttonText}
+            </Button>
+          </NextLink>
+        }
+      </Box> 
+  )
+}
 
 export default function Home(props) {
   const conferenceQuery = useQuery('homeConferences', ()=>ConferencesData(3), { initialData: props.conferences })
@@ -17,16 +45,46 @@ export default function Home(props) {
   return (
     <Section>
 
-      <Heading
-        fontWeight={900}
-        fontSize={{ base: '4xl', sm: '5xl', md: '6xl' }}
-        lineHeight={'110%'}>
-        Texas Public Safety Association
-      </Heading>
+      <Box shadow='md' borderRadius='lg' overflow='hidden' mb={5}>
+      <Alert status='warning'>
+        <AlertIcon />
+        <AlertTitle>Beta Site</AlertTitle>
+        <AlertDescription>
+          This site is a beta version and may not be stable.
+        </AlertDescription>
+        
+      </Alert>
+      </Box>
 
-      <Text maxW={'3xl'} color={'gray.500'}>
-        The mission of the Texas Public Safety Association is to promote Law, Public Safety, Corrections, and Security students with knowledge, skills, leadership, and student growth through real world career preparation, experience, training and competitive opportunities.
-      </Text>
+      <Box bgGradient="linear(to-r, red.600,blue.600)" p={10} shadow='md' borderWidth='1px' borderRadius='lg' overflow='hidden' mb={5}>
+        <Heading
+          fontSize={'5xl'}
+          color={'white'}
+          fontWeight={900}
+          textShadow="md"
+        >
+          Texas Public Safety Association
+        </Heading>
+
+        <Text maxW={'3xl'} color={'white'} mb={10}>
+          The mission of the Texas Public Safety Association is to promote Law, Public Safety, Corrections, and Security students with knowledge, skills, leadership, and student growth through real world career preparation, experience, training and competitive opportunities.
+        </Text>
+
+        <HStack>
+          <NextLink href="/join" passHref>
+            <Button colorScheme="blackAlpha" variant="solid">
+                Join Today
+            </Button>
+          </NextLink>
+
+          <NextLink href="/compete" passHref>
+            <Button colorScheme="blackAlpha" variant="solid">
+                Competition
+            </Button>
+          </NextLink>
+          
+        </HStack>
+      </Box>
 
       <Heading
         fontWeight={900}
@@ -38,19 +96,19 @@ export default function Home(props) {
 
 
 
-      <Wrap py={4} opacity={conferenceQuery.isLoading ? 0.5 : 1}>
+      <SimpleGrid columns={{base: 1, md: 3}} spacing={5} py={4} opacity={conferenceQuery.isLoading ? 0.5 : 1}>
       {conferenceQuery.data.map((conference) => (
-
-        <WrapItem key={conference.id}>
-          <Card 
+          <ConferenceCard 
+            key={conference.id}
             title={conference.name}
             subTitle={`${conference.start_date} - ${conference.end_date}`}
             buttonLink={`/conferences/${conference.id}`}
             buttonText="Conference"
+            tags={[]}
+            desc={null}
           />
-        </WrapItem>
       ))}
-      </Wrap>
+      </SimpleGrid >
 
 
       <NextLink href={"/feed"} passHref>
@@ -65,14 +123,13 @@ export default function Home(props) {
         fontSize={'2xl'}
         mt={8}
         lineHeight={'100%'}>
-        Feed
+        News
       </Heading>
 
-
-      <Wrap py={4} opacity={feedQuery.isLoading ? 0.5 : 1}>
+      <SimpleGrid columns={{base: 1, md: 3}} spacing={5} py={4} opacity={conferenceQuery.isLoading ? 0.5 : 1}>
       {feedQuery.data.map((post) => (
-        <WrapItem key={post.id}>
-          <Card 
+          <ConferenceCard 
+            key={post.id}
             title={post.title}
             subTitle={post.date_updated}
             desc={post.description}
@@ -80,9 +137,8 @@ export default function Home(props) {
             buttonText="Read More"
             tags={post.conference ? [post.conference.name] : []}
           />
-        </WrapItem>
       ))}
-      </Wrap>
+      </SimpleGrid >
 
       <NextLink href={"/feed"} passHref>
         <Button mt={2} rightIcon={<ArrowForwardIcon />} variant={'link'} colorScheme={'blue'}>

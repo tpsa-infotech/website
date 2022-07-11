@@ -46,7 +46,7 @@ export default function LargeWithLogoLeft() {
             <Link href={'#'}>Releases</Link>
           </Stack>
           <Stack align={'flex-start'}>
-            <ListHeader>Company</ListHeader>
+            <ListHeader>Organization</ListHeader>
             <Link href={'#'}>About</Link>
             <Link href={'#'}>Press</Link>
             <Link href={'#'}>Careers</Link>
@@ -55,19 +55,15 @@ export default function LargeWithLogoLeft() {
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>Support</ListHeader>
-            <Link href={'#'}>Help Center</Link>
-            <Link href={'#'}>Terms of Service</Link>
-            <Link href={'#'}>Legal</Link>
-            <Link href={'#'}>Privacy Policy</Link>
-            <Link href={'#'}>Status</Link>
+            <Link href={'https://tpsa.info/help'}>Help Center</Link>
+            <Link href={'https://status.tpsa.info'}>Status</Link>
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>Follow Us</ListHeader>
-            <Link href={'#'}>Facebook</Link>
-            <Link href={'#'}>Twitter</Link>
-            <Link href={'#'}>Dribbble</Link>
-            <Link href={'#'}>Instagram</Link>
-            <Link href={'#'}>LinkedIn</Link>
+            <Link href={'https://facebook.com/tpsasocial'}>Facebook</Link>
+            <Link href={'https://twitter.com/tpsasocial'}>Twitter</Link>
+            <Link href={'https://instagram.com/tpsasocial'}>Instagram</Link>
+            <Link href={'https://linkedin.com/company/tpsasocial'}>LinkedIn</Link>
           </Stack>
         </SimpleGrid>
       </Container>

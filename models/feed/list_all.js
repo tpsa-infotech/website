@@ -20,18 +20,20 @@ export default async () => {
         "limit": -1,
     })
 
-    
-
-    const feed_posts = response.data.map((post) => {
-        if(!post.date_updated){
-            post.date_updated = post.date_created
+    return response.data.map(i => {
+        if(!i.date_updated){
+            i.date_updated = i.date_created
         }
+
         return {
-            ...post,
-            date_updated: formatTitle(formatRelative(parseISO(post.date_updated), new Date())),
-            
+            id: i.id,
+            title: formatTitle(i.title),
+            description: i.description,
+            status: i.status,
+            date_updated: format(parseISO(i.date_updated), data_format),
+            date_created: format(parseISO(i.date_created), data_format),
+            conference: i.conference,
+            date_relative: formatTitle(formatRelative(parseISO(i.date_updated), new Date())),
         }
-    });
-
-    return feed_posts
+    })
 }

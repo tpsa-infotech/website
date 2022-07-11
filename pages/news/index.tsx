@@ -10,6 +10,7 @@ import { Section, Card } from '@/components/library';
 import {Box, Stack, Badge, Heading, Text, Button, VStack, StackDivider} from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 
+
 // Page Function
 const template = (props) => {
 
@@ -24,7 +25,7 @@ const template = (props) => {
         fontSize={'3xl'}
         mt={8}
         lineHeight={'100%'}>
-        Update Feed
+        News
       </Heading>
 
       <VStack
@@ -44,10 +45,9 @@ const template = (props) => {
               {post.title}
             </Heading>
 
-            <Text mt={1}>{post.date_updated}</Text>
+            <Text mt={1}>{post.date_relative}</Text>
 
-            {post.conference && <Stack direction='row' mt={0.5
-            }>
+            {post.conference && <Stack direction='row' mt={0.5}>
               <Badge  variant="subtle" size="sm">{post.conference.name}</Badge>)
             </Stack>}
 
@@ -55,7 +55,7 @@ const template = (props) => {
               {post.description}
             </Text>
 
-            <NextLink href={`/feed/${post.id}`} passHref>
+            <NextLink href={`/news/${post.id}`} passHref>
               <Button mt={2} rightIcon={<ArrowForwardIcon />} variant={'link'} colorScheme={'blue'}>
                 Read More
               </Button>

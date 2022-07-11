@@ -36,8 +36,6 @@ export function Card({title, subTitle, desc, buttonLink, buttonText = "Details",
               </Button>
             </NextLink>
           }
-          
-          
         </Box> 
     )
   }
