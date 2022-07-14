@@ -85,7 +85,7 @@ const template = (props) => {
             </NextLink>
 
             {departments.map(department => (
-                <>
+                <div key={department}>
                     <Heading size="sm" mt={10} mb={5}>{department}</Heading>
 
                     <SimpleGrid minChildWidth='300px' spacing={6}>
@@ -121,7 +121,7 @@ const template = (props) => {
 
                     ))}
                     </SimpleGrid>
-                </>
+                </div>
             ))}
 
             

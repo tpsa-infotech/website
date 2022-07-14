@@ -26,15 +26,7 @@ export default function Conference(props) {
   return (
     <Container maxWidth={'8xl'} py={10}  {...props}>
 
-      <Flex>
-        <Box w='20rem' p={5}>
 
-        </Box>
-        <Box flex='1' p={5}>
-
-
-        </Box>
-      </Flex>
 
       <Flex align="flex-start" display={{
         base: 'block', // 0-48em

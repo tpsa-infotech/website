@@ -4,6 +4,7 @@ import Navbar from './navbar'
 import Footer from './footer'
 import Banner from './banner'
 import { Section } from '@/components/library';
+import {Box, useColorModeValue} from "@chakra-ui/react"
 
 export default function Layout({ children }) {
   return (
@@ -11,9 +12,9 @@ export default function Layout({ children }) {
         
         <Navbar />
         <Banner />
-        <main>
+        <Box bg={useColorModeValue('gray.50', 'gray.900')}>
             {children}
-          </main>
+          </Box>
         <Footer />
     </>
   )

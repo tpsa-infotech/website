@@ -28,7 +28,7 @@ export default async () => {
         }
         return {
             ...post,
-            date_updated: formatTitle(formatRelative(parseISO(post.date_updated), new Date())),
+            date_updated: formatRelative(parseISO(post.date_updated), new Date()),
             
         }
     });

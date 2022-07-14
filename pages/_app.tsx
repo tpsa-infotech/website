@@ -1,6 +1,6 @@
 import { ChakraProvider, extendTheme  } from '@chakra-ui/react'
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
-import { theme } from '@chakra-ui/pro-theme'
+import { theme } from '@chakra-ui/theme'
 import '@fontsource/inter/variable.css'
 import Layout from '../components/layout'
 import React from 'react'

@@ -8,6 +8,7 @@ import { Text, Heading, VStack, StackDivider, Box, Stack, Badge, Button, useColo
 
 import NextLink from 'next/link';
 
+
 import { ArrowForwardIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 export default function Conference(props) {
